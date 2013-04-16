@@ -45,7 +45,7 @@ char charDigit(unsigned char val)
 	return val-10+'A';
 }
 
-void intToStr(char *dest, int val, char base)
+void intToStr(char *dest, s32int val, u8int base)
 {
 	if(val==0)
 		{
@@ -54,14 +54,14 @@ void intToStr(char *dest, int val, char base)
 		return;
 		}
 	
-	unsigned char i=0;
+	u8int i=0;
 	if(val < 0)
 		{
 		dest[i++]='-';
 		val = -val;
 		}
 	
-	unsigned char helpbase=1;
+	u8int helpbase=1;
 	while(helpbase < val/base)
 		{
 		helpbase *= base;

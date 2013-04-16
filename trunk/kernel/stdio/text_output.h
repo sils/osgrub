@@ -2,6 +2,7 @@
 #define text_output_h
 
 #include <stdint.h>
+#include "generalStdio.h"
 
 void printColoredChar(char, char);
 void printColoredString(char *, char);
