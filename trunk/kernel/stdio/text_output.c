@@ -18,9 +18,9 @@ void printColoredString(char *strPtr, char colCode)
 		}
 }
 
-int strlen(char *str)
+u32int strlen(char *str)
 {
-	int i=0;
+	u32int i=0;
 	while(str[i])
 		i++;
 	return i;
