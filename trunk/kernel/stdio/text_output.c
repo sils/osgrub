@@ -47,6 +47,16 @@ char charDigit(unsigned char val)
 
 void intToStr(char *dest, s32int val, u8int base)
 {
+	if(val<0)
+		{
+		dest[0]='-';
+		uIntToStr(dest+1, (u32int)(-val), base);
+		}
+	else uIntToStr(dest, (u32int)val, base);
+}
+
+void uIntToStr(char *dest, u32int val, u8int base)
+{
 	if(val==0)
 		{
 		dest[0]='0';
@@ -55,11 +65,6 @@ void intToStr(char *dest, s32int val, u8int base)
 		}
 	
 	u8int i=0;
-	if(val < 0)
-		{
-		dest[i++]='-';
-		val = -val;
-		}
 	
 	u8int helpbase=1;
 	while(helpbase < val/base)

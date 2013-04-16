@@ -129,10 +129,6 @@ void irqHandler(registers_t regs)
     if (interrupt_handlers[regs.int_no] != 0)
    		
    		{
-   		char str[5];
-		//printString("A handled irq was triggered!!! Number: ");
-		//intToStr(str, regs.int_no, 10);
-		//printString(str);
         isr_t handler = interrupt_handlers[regs.int_no];
         handler(regs);
    		}

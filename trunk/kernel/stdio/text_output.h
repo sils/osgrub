@@ -10,6 +10,7 @@ void strcat(char *, char *);
 void strcpy(char *, char *);
 u32int strlen(char *);
 char charDigit(unsigned char);
+void uIntToStr(char *, u32int, u8int);
 void intToStr(char *, s32int, u8int);
 
 #define printChar(charVar) printColoredChar((charVar), 0x0F)
