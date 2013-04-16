@@ -14,13 +14,7 @@ void init(void)
 	generateIdt();
 	printString("Sucessfully installed interupt descriptor table!");
 	
-	//for testing
-	printString("Triggering interrupt no 3:");
-	asm volatile ("int $0x3");
-	printString("Divide by zero now...");
-	asm volatile ("int $0x2A"); // trigger irq event no 42
-	printString("Initialize timer now...");
-	initTimer(100);
+	initTimer(200);
 	// int g=0;
 	//asm volatile("int $0x0");
 	 //g=5/g;// SOMEHOW this exception doesn't work that well
