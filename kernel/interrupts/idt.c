@@ -109,9 +109,9 @@ void register_interrupt_handler(u16int n, isr_t handler)
 void unhandledException(registers_t regs)
 {
 	char str[5];
-	printString("An unhandled exception was triggered! Number: ");
+	print("An unhandled exception was triggered! Number: ");
 	intToStr(str, regs.int_no, 10);
-	printString(str);
+	print(str);
 }
 
 void irqHandler(registers_t regs)
@@ -135,8 +135,8 @@ void irqHandler(registers_t regs)
     else
    		{
    		char str[5];
-		printString("An unhandled irq was triggered! Number: ");
+		print("An unhandled irq was triggered! Number: ");
 		intToStr(str, regs.int_no, 10);
-		printString(str);
+		print(str);
 		}
 }

@@ -3,12 +3,13 @@
 
 #include "stdio.h"
 
-void kprintf(char *, ...);
+void kprintf(const char *, ...);
 void put(const unsigned char, const u8int);
+void print(char *);
 char charDigit(const unsigned char);
-void uIntToStr(const char *, u32int, const u8int);
-void intToStr(const char *, const s32int, const u8int);
+void uIntToStr(char *, u32int, const u8int);
+void intToStr(char *, const s32int, const u8int);
 
-#define putChar(toput) 
+#define putChar(toput) put((toput), 0x0f)
 
 #endif

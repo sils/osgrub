@@ -2,13 +2,13 @@
 
 void printException(char *message)
 {
-	printColoredString(message, 0x0c);
+	print(message);
 }
 
 void printFatalException(char *message)
 {
-	printColoredString(message, 0x04);
-	printColoredString(" HALTING SYSTEM!", 0x04);
+	print(message);
+	print(" HALTING SYSTEM!");
 	kernelException(); //yeah this is not that great
 	// just prevents the system from doing anything
 }

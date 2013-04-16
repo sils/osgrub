@@ -9,9 +9,9 @@ static void timerInterrupt(registers_t regs)
 		{
 		sec++;
 		char str[6];//unsigned 32 bit integer can have 5 signs at max
-		printString(" Seconds until now: ");
+		print(" Seconds until now: ");
 		uIntToStr(str, sec, 10);
-		printString(str);
+		print(str);
 		}
 }
 

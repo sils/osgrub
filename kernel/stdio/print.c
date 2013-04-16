@@ -4,7 +4,7 @@ void put(const unsigned char val, const u8int color)
 {
 	static u8int x=0, y=0;
 	u16int i;
-	const volatile unsigned char *videoram = (unsigned char *)0xB8000;
+	volatile unsigned char *videoram = (unsigned char *)0xB8000;
 	
 	if(val == '\n')
 		{
@@ -23,7 +23,11 @@ void put(const unsigned char val, const u8int color)
 		for(i=0;i<24*80*2;i++)
 			videoram[i]=videoram[i+160];
 		for(; i<2*25*80;i++)
-			videoram[i]=' ';
+			{
+			if(i % 2)
+				videoram[i]=0;
+			else videoram[i]=' ';
+			}
 		y--;
 		}
 	
@@ -45,17 +49,17 @@ char charDigit(const unsigned char val)
 	return val-10+'A';
 }
 
-void intToStr(const char *dest, const s32int val, const u8int base)
+void intToStr(char *dest, const s32int val, const u8int base)
 {
 	if(val<0)
 		{
-		dest[0]='-';
+		*(dest)='-';
 		uIntToStr(dest+1, (u32int)(-val), base);
 		}
 	else uIntToStr(dest, (u32int)val, base);
 }
 
-void uIntToStr(const char *dest, u32int val, const u8int base)
+void uIntToStr(char *dest, u32int val, const u8int base)
 {
 	//at binary representation we can have max 32 digits
 	char buf[33];
@@ -110,7 +114,7 @@ void kprintf(const char *format, ...)
 			{
 			putChar(*format);
 			}
-		format++
+		format++;
 		}
 	
 	va_end(args);
