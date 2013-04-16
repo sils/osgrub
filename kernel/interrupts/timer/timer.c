@@ -5,7 +5,7 @@ u32int tick = 0, freq, sec=0;
 static void timerInterrupt(registers_t regs)
 {
 	tick++;
-	printString("TIMER INTERRUPT!");
+	//printString("TIMER INTERRUPT!");
 	if(tick % freq == 0)
 		{
 		sec++;

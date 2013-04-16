@@ -11,10 +11,11 @@ void init(void)
 	printString("Kernel booted.");
 	gdt_install();
 	printString("Sucessfully installed global descriptor table!");
-	generateIdt();
+	
 	printString("Sucessfully installed interupt descriptor table!");
 	
-	initTimer(200);
+	initTimer(100);
+	generateIdt();
 	// int g=0;
 	//asm volatile("int $0x0");
 	 //g=5/g;// SOMEHOW this exception doesn't work that well
