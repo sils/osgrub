@@ -1,9 +1,21 @@
 #include "text_output.h"
 
+//TODO implement kernelprintf function!!!
+//dont rely on these functions
+
 void printColoredChar(char val, const char colCode)
 {
 	volatile unsigned char *videoram = (unsigned char *)0xB8000;
-	static uint32_t c=0;
+	static u32int c=0;
+	videoram[c++] = val;
+	videoram[c++] = colCode;
+	if(c > 80*24)
+		c=0;
+}
+
+void printColoredCharPos(char val, const char colCode, u32int c)
+{
+	volatile unsigned char *videoram = (unsigned char *)0xB8000;
 	videoram[c++] = val;
 	videoram[c++] = colCode;
 	if(c > 80*24)
@@ -15,6 +27,14 @@ void printColoredString(char *strPtr, const char colCode)
 	while(*strPtr != '\0')
 		{
 		printColoredChar(*strPtr++, colCode);
+		}
+}
+
+void printColoredStringPos(char *strPtr, const char colCode, u32int c)
+{
+	while(*strPtr != '\0')
+		{
+		printColoredCharPos(*strPtr++, colCode, c++);
 		}
 }
 
@@ -57,29 +77,16 @@ void intToStr(char *dest, s32int val, u8int base)
 
 void uIntToStr(char *dest, u32int val, u8int base)
 {
-	if(val==0)
+	//new strategy: from the end.
+	char buf[33];
+	int i=32;
+	buf[i]=0;
+	do
 		{
-		dest[0]='0';
-		dest[1]=0;
-		return;
+		buf[--i] = charDigit(val % base);
+		val /= base;
 		}
-	
-	u8int i=0;
-	
-	u8int helpbase=1;
-	while(helpbase < val/base)
-		{
-		helpbase *= base;
-		}
-	
-	char helpval;
-	while(helpbase > 0)
-		{
-		helpval = val/helpbase;
-		dest[i++]=charDigit(helpval);
-		val -= helpbase*helpval;
-		helpbase /= base;
-		}
-	dest[i]=0;
+	while(val);
+	strcpy(dest, buf+i);
 }
 
