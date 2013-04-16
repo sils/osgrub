@@ -7,6 +7,7 @@ void printColoredChar(char, char);
 void printColoredString(char *, char);
 void strcat(char *, char *);
 void strcpy(char *, char *);
+unsigned int strlen(char *);
 char charDigit(unsigned char);
 void intToStr(char *, int, char);
 

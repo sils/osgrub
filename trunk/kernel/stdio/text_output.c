@@ -18,6 +18,13 @@ void printColoredString(char *strPtr, char colCode)
 		}
 }
 
+int strlen(char *str)
+{
+	int i=0;
+	while(str[i])
+		i++;
+	return i;
+}
 
 void strcat(char * dest, char * append)
 {
