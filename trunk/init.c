@@ -15,6 +15,7 @@ void init(void)
 	print("Sucessfully installed interupt descriptor table!\n");
 	
 	initTimer(100);
+	register_interrupt_handler(IRQ1, &keyboardHandler);
 	generateIdt();
 	// int g=0;
 	//asm volatile("int $0x0");

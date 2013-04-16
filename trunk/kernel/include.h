@@ -18,7 +18,6 @@
 
 //interrupts
 #include "interrupts/interrupts.h"
-//#include "extern/isrs.c"
 
 //exception handling
 #include "exceptions/exceptions.h"
