@@ -12,17 +12,21 @@ void setIdtEntry(unsigned char id, unsigned long base, unsigned short sel, unsig
 
 void remapIrq()
 {
-	// Remap the irq table.
-    outb(0x20, 0x11);
-    outb(0xA0, 0x11);
+    outb(0x20, 0x11); //initialize master PIC
     outb(0x21, 0x20);
-    outb(0xA1, 0x28);
     outb(0x21, 0x04);
-    outb(0xA1, 0x02);
     outb(0x21, 0x01);
+    
+    outb(0xA0, 0x11); //initialize slave PIC
+    outb(0xA1, 0x28);
+    outb(0xA1, 0x02);
     outb(0xA1, 0x01);
-    outb(0x21, 0x0);
-    outb(0xA1, 0x0);
+    
+    //activate IRQs
+    outb(0x20,0x0);
+    outb(0xA0, 0x0);
+    //outb(0x21, 0x0);
+    //outb(0xA1, 0x0);
 }
 
 void generateIdt()
@@ -88,6 +92,8 @@ void generateIdt()
 
 	// call assembler function
 	idt_load();
+	
+	asm volatile("sti");
 }
 
 isr_t interrupt_handlers[256];
@@ -122,10 +128,11 @@ void irqHandler(registers_t regs)
    
     if (interrupt_handlers[regs.int_no] != 0)
    		
-   		{char str[5];
-		printString("A handled irq was triggered!!! Number: ");
-		intToStr(str, regs.int_no, 10);
-		printString(str);
+   		{
+   		char str[5];
+		//printString("A handled irq was triggered!!! Number: ");
+		//intToStr(str, regs.int_no, 10);
+		//printString(str);
         isr_t handler = interrupt_handlers[regs.int_no];
         handler(regs);
    		}
