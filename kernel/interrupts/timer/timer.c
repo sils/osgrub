@@ -8,10 +8,7 @@ static void timerInterrupt(registers_t regs)
 	if(tick % freq == 0)
 		{
 		sec++;
-		char str[6];//unsigned 32 bit integer can have 5 signs at max
-		print(" Seconds until now: ");
-		uIntToStr(str, sec, 10);
-		print(str);
+		kprintf("Interrupt: %x; Sec: %u\n", regs.int_no, sec);
 		}
 }
 

@@ -10,5 +10,6 @@
 
 #include "idt.h"
 #include "timer/timer.h"
+#include "keyboard/keyboardInt.h"
 
 #endif

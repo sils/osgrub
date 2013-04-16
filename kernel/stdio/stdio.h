@@ -5,6 +5,6 @@
 #include "print.h"
 #include "stdarg.h"
 #include "../store/strings.h"
-//#include "../store/layouts.h"
+//#include "../store/layouts.h" //obsolete (for now)
 
 #endif

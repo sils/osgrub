@@ -3,6 +3,4 @@
 
 #include "kbd_us.h" //us keyboard layout
 
-unsigned char *stdkb = kbd_us;
-
 #endif
