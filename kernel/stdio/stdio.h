@@ -2,7 +2,9 @@
 #define stdio_h
 
 #include "generalStdio.h"
-#include "text_output.h"
+#include "print.h"
+#include "stdarg.h"
+#include "../store/strings.h"
 //#include "../store/layouts.h"
 
 #endif
