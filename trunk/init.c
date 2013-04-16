@@ -5,14 +5,14 @@ void init(void)
 	extern uint32_t magic;
 	if ( magic != 0x2BADB002 )
 	{
-		printString("There was an error during the boot sequence! (Magic number does not match.)");
+		print("There was an error during the boot sequence! (Magic number does not match.)");
 	}
 
-	printString("Kernel booted.");
+	print("Kernel booted.\n");
 	gdt_install();
-	printString("Sucessfully installed global descriptor table!");
+	print("Sucessfully installed global descriptor table!\n");
 	
-	printString("Sucessfully installed interupt descriptor table!");
+	print("Sucessfully installed interupt descriptor table!\n");
 	
 	initTimer(100);
 	generateIdt();
@@ -20,7 +20,7 @@ void init(void)
 	//asm volatile("int $0x0");
 	 //g=5/g;// SOMEHOW this exception doesn't work that well
 	// it is triggered on and on...
-	printString("Sucessfully divided 5 by zero :)");
+	print("Sucessfully divided 5 by zero :)\n");
 	asm volatile ("int $0x20");
 
 	for(;;);
