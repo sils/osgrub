@@ -4,8 +4,8 @@
 #include <stdint.h>
 #include "generalStdio.h"
 
-void printColoredChar(char, char);
-void printColoredString(char *, char);
+void printColoredChar(char, const char);
+void printColoredString(char *, const char);
 void strcat(char *, char *);
 void strcpy(char *, char *);
 u32int strlen(char *);
