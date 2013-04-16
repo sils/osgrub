@@ -1,6 +1,6 @@
 #include "text_output.h"
 
-void printColoredChar(char val, char colCode)
+void printColoredChar(char val, const char colCode)
 {
 	volatile unsigned char *videoram = (unsigned char *)0xB8000;
 	static uint32_t c=0;
@@ -10,7 +10,7 @@ void printColoredChar(char val, char colCode)
 		c=0;
 }
 
-void printColoredString(char *strPtr, char colCode)
+void printColoredString(char *strPtr, const char colCode)
 {
 	while(*strPtr != '\0')
 		{

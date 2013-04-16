@@ -1,8 +1,11 @@
 CC	= gcc
-CFLAGS	= -m32 -Wall -Wextra -nostdlib -fno-builtin -nostartfiles -nodefaultlibs -ffreestanding
+CFLAGS	= -m32 -Wall -Wextra -nostdlib -nostdinc -fno-builtin -nostartfiles -nodefaultlibs -ffreestanding
 LD	= ld
+LDFLAGS = -melf_i386 -T linker.ld
  
-OBJFILES = loader.o init.o kernel/stdio/text_output.o kernel/gdt/gdt.o kernel/exceptions/exceptions.o kernel/interrupts/idt.o kernel/memory/memory.o kernel/stdio/generalStdio.o kernel/interrupts/timer/timer.o
+SRCS = $(shell find -name '*.[csS]')
+OBJFILES = $(addsuffix .o,$(basename $(SRCS)))
+#OBJFILES = loader.o init.o kernel/stdio/text_output.o kernel/gdt/gdt.o kernel/exceptions/exceptions.o kernel/interrupts/idt.o kernel/memory/memory.o kernel/stdio/generalStdio.o kernel/interrupts/timer/timer.o
  
 all: kernel.img
  
@@ -13,7 +16,7 @@ all: kernel.img
 	$(CC) $(CFLAGS) -o $@ -c $<
  
 kernel.bin: $(OBJFILES)
-	$(LD) -melf_i386 -T linker.ld -o $@ $^
+	$(LD) $(LDFLAGS) -o $@ $^
  
 kernel.img: kernel.bin
 	dd if=/dev/zero of=buildhelpers/pad bs=1 count=750
