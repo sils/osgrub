@@ -8,7 +8,6 @@ static void timerInterrupt(registers_t regs)
 	if(tick % freq == 0)
 		{
 		sec++;
-		kprintf("Interrupt: %x; Sec: %u\n", regs.int_no, sec);
 		}
 }
 
