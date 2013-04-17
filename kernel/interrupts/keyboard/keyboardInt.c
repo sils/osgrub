@@ -11,9 +11,9 @@ void keyboardHandler(registers_t regs)
 	  't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',	/* Enter key */
 		0,			/* 29   - Control */
 	  'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',	/* 39 */
-	 '\'', '`',   0,		/* Left shift */
+	 '\'', '`',   1,		/* Left shift */
 	 '\\', 'z', 'x', 'c', 'v', 'b', 'n',			/* 49 */
-	  'm', ',', '.', '/',   0,				/* Right shift */
+	  'm', ',', '.', '/',   1,				/* Right shift */
 	  '*',
 		0,	/* Alt */
 	  ' ',	/* Space bar */
@@ -42,15 +42,31 @@ void keyboardHandler(registers_t regs)
 		0,	/* All other keys are undefined */
 	};
 	unsigned char scancode;
+	static unsigned char ctrlKeys;
 	
 	scancode = inb(0x60); 
 	
 	if(scancode & 0x80)//a key was released
 		{
-		
+		scancode &=0x7f;//set the 0x80 bit zero
+		if(kbd_us[scancode] == 1)
+			{
+			ctrlKeys &= 0xFE;//set the last bit zero
+			}
 		}
 	else
 		{
-		putChar(kbd_us[scancode]);
+		switch(kbd_us[scancode])
+			{
+			case 1:
+				ctrlKeys |= 0x01;//last bit is shift status
+				break;
+			default:
+				if(ctrlKeys & 0x01)
+					putChar(upperCase(kbd_us[scancode]));
+				else
+					putChar(kbd_us[scancode]);
+				break;
+			}
 		}
 }

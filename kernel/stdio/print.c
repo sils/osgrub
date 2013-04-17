@@ -99,6 +99,7 @@ void kprintf(const char *format, ...)
 				case 'x'://hexadecimal unsigned integer
 					u_32_int = va_arg(args, u32int);
 					uIntToStr(numStr, u_32_int, 16);
+					print("0x");
 					print(numStr);
 					break;
 				case '%':
