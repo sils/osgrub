@@ -19,9 +19,9 @@ void init(void)
 	generateIdt();
 	// int g=0;
 	//asm volatile("int $0x0");
-	 //g=5/g;// SOMEHOW this exception doesn't work that well
+	//g=5/g;// SOMEHOW this exception doesn't work that well
 	// it is triggered on and on...
-	print("Sucessfully divided 5 by zero :)\n");
+	//print("Sucessfully divided 5 by zero :)\n");
 	asm volatile ("int $0x20");
 
 	for(;;);
