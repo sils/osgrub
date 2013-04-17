@@ -108,10 +108,7 @@ void register_interrupt_handler(u16int n, isr_t handler)
 //(independent on what happens in there)
 void unhandledException(registers_t regs)
 {
-	char str[5];
-	print("An unhandled exception was triggered! Number: ");
-	intToStr(str, regs.int_no, 10);
-	print(str);
+	kprintf("An unhandled exception was triggered! Number: %x\n", regs.int_no);
 }
 
 void irqHandler(registers_t regs)
@@ -134,9 +131,6 @@ void irqHandler(registers_t regs)
    		}
     else
    		{
-   		char str[5];
-		print("An unhandled irq was triggered! Number: ");
-		intToStr(str, regs.int_no, 10);
-		print(str);
+		kprintf("An unhandled irq was triggered! Number: %x\n",regs.int_no);
 		}
 }
