@@ -8,21 +8,12 @@ void init(void)
 		print("There was an error during the boot sequence! (Magic number does not match.)");
 	}
 
-	print("Kernel booted.\n");
+	print("Kernel booted. :)\n");
 	gdt_install();
-	print("Sucessfully installed global descriptor table!\n");
-	
-	print("Sucessfully installed interupt descriptor table!\n");
-	
 	initTimer(100);
 	register_interrupt_handler(IRQ1, &keyboardHandler);
 	generateIdt();
-	// int g=0;
-	//asm volatile("int $0x0");
-	//g=5/g;// SOMEHOW this exception doesn't work that well
-	// it is triggered on and on...
-	//print("Sucessfully divided 5 by zero :)\n");
-	asm volatile ("int $0x20");
+	kprintf("Everything's set up. You can start typing now and see what happens (uuuuh it appears!)\n");
 
 	for(;;);
 }
