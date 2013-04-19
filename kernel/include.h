@@ -25,6 +25,12 @@
 //exception handling
 #include "exceptions/exceptions.h"
 
+//access to some BIOS information
+#include "cmos/cmos.h"
+
+//our kernel-shell
+#include "kshell/kshell.h"
+
 //let's start multitasking!
 #include "tasks/taskroutines.h"
 #include "tasks/tasks.h"

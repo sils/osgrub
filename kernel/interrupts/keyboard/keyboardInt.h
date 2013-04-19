@@ -5,5 +5,6 @@
 #include "../../store/strings.h"
 
 void keyboardHandler(struct registers);
+void initKeyboard();
 
 #endif

@@ -6,4 +6,7 @@
 
 void initTimer(const u32int freq);
 
+uint8_t sec,min,hour,day,mon;
+uint16_t year;
+
 #endif

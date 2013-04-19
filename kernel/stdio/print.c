@@ -115,6 +115,11 @@ void kprintf(const char *format, ...)
 					strPtr = va_arg(args, char *);
 					print(strPtr);
 					break;
+				case 'd'://unsigned integer
+					u_32_int = va_arg(args, u32int);
+					intToStr(numStr, (int)u_32_int, 10);
+					print(numStr);
+					break;
 				case 'u'://unsigned integer
 					u_32_int = va_arg(args, u32int);
 					uIntToStr(numStr, u_32_int, 10);

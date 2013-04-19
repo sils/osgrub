@@ -1,13 +1,21 @@
 #include "kernel/include.h"
 
-void init(void)
+void init(struct multiBoot *mbstruct)
 {
-	print("Kernel booted HOPEFULLY from stick.\n");
+	kprintf("Kernel booted successfully.\n");
+	kprintf("Installing global descriptor table...\n");
 	gdt_install();
+	kprintf("Initiate software clock...\n");
 	initTimer(100);
+	kprintf("Initiate memory manager...\n");
+	mMInit(mbstruct);
+	kprintf("Install keyboard interrupt handler...\n");
 	register_interrupt_handler(IRQ1, &keyboardHandler);
+	kprintf("Install interrupt descriptor table...\n");
 	generateIdt();
-	kprintf("Everything's set up. You can start typing now and see what happens (uuuuh it appears!)\n");
+	initKeyboard();
+	kprintf("Everything's set up. Type help to get more information.\n");
+	kprintf("[user]$ ");
 
 	for(;;);
 }
