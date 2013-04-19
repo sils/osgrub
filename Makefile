@@ -20,9 +20,12 @@ kernel.bin: $(OBJFILES)
 kernel.img: kernel.bin
 	dd if=/dev/zero of=buildhelpers/pad bs=1 count=750
 	cat buildhelpers/stage1 buildhelpers/stage2 buildhelpers/pad $< > $@
+
+iso: all
+	cp kernel.bin buildhelpers/iso/boot/grub/kernel
+	echo "Creating grub iso."
+	grub-mkrescue -o buildhelpers/bootable.iso buildhelpers/iso
+	echo "Just dd the ISO to your stick!"
  
 clean:
-	$(RM) $(OBJFILES) kernel.bin kernel.img *~ */*~ */*/*~ */*/*/*~ kernel.o floppy.img buildhelpers/pad
- 
-install:
-	$(RM) $(OBJFILES) kernel.bin
+	$(RM) $(OBJFILES) kernel.bin kernel.img *~ */*~ */*/*~ */*/*/*~ kernel.o floppy.img buildhelpers/pad buildhelpers/grubiso/boot/grub/kernel

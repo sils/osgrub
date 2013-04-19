@@ -1,35 +1,59 @@
 #include "print.h"
 
+void scrollUp()
+{
+	u16int i;
+	volatile unsigned char *videoram = (unsigned char *)0xB8000;
+	for(i=0;i<24*80*2;i++)
+		videoram[i]=videoram[i+160];
+	for(; i<2*25*80;i++)
+	{
+		if(i % 2)
+			videoram[i]=0;
+		else videoram[i]=' ';
+	}
+}
+
 void put(const unsigned char val, const u8int color)
 {
 	static u8int x=0, y=0;
-	u16int i;
 	volatile unsigned char *videoram = (unsigned char *)0xB8000;
 	
 	if(val == '\n')
-		{
+	{
 		x=0;
 		y++;
-		return;
+		if(y>24)//scroll up one line
+		{
+			scrollUp();
+			y--;
 		}
+		return;
+	}
+	
+	if(val == '\b')
+	{
+		if(x>0)
+		{
+			x--;
+			videoram[2*(y*80 + x)] = ' ';
+			videoram[2*(y*80 + x)+1] = color;
+			return;
+		}
+		else
+			return;
+	}
 	
 	if(x>79)
-		{
+	{
 		x=0;
 		y++;
-		}
+	}
 	if(y>24)//scroll up one line
-		{
-		for(i=0;i<24*80*2;i++)
-			videoram[i]=videoram[i+160];
-		for(; i<2*25*80;i++)
-			{
-			if(i % 2)
-				videoram[i]=0;
-			else videoram[i]=' ';
-			}
+	{
+		scrollUp();
 		y--;
-		}
+	}
 	
 	videoram[2*(y*80 + x)] = val;
 	videoram[2*(y*80 + x)+1] = color;
