@@ -109,8 +109,7 @@ void register_interrupt_handler(u16int n, isr_t handler)
 //(independent on what happens in there)
 void unhandledException(registers_t regs)
 {
-	if(regs.int_no == 0)
-		kprintf("An unhandled exception was triggered! Number: %x\n", regs.int_no);
+	kprintf("An unhandled exception was triggered! Number: %x\n", regs.int_no);
 }
 
 void irqHandler(registers_t regs)
