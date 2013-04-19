@@ -1,4 +1,11 @@
-#include "keyboardInt.h"
+#include "../../include.h"
+
+void initKeyboard()
+{
+	while ((inb(0x64) & 0x2)); //wait until keyboard is ready
+    outb(0x60,0xF4);
+    kprintf("Successfully activated keyboard.");
+}
 
 void keyboardHandler(registers_t regs)
 {
@@ -82,6 +89,8 @@ void keyboardHandler(registers_t regs)
 	};
 	unsigned char scancode;
 	static unsigned char ctrlKeys;
+	static char line[80];
+	static uint8_t i=0;
 	
 	if(regs.int_no != IRQ1)
 	{
@@ -91,26 +100,45 @@ void keyboardHandler(registers_t regs)
 	scancode = inb(0x60); 
 	
 	if(scancode & 0x80)//a key was released
-		{
+	{
 		scancode &=0x7f;//set the 0x80 bit zero
 		if(kbd_us[scancode] == 1)
-			{
-			ctrlKeys &= 0xFE;//set the last bit zero
-			}
-		}
-	else
 		{
+			ctrlKeys &= 0xFE;//set the last bit zero
+		}
+	}
+	else
+	{
 		switch(kbd_us[scancode])
-			{
+		{
 			case 1:
 				ctrlKeys |= 0x01;//last bit is shift status
 				break;
 			default:
-				if(ctrlKeys & 0x01)
-					putChar(kbd_us_up[scancode]);
-				else
-					putChar(kbd_us[scancode]);
+				if(kbd_us[scancode] != '\b' || i>0)
+				{
+					if(ctrlKeys & 0x01)
+					{
+						line[i++]=kbd_us_up[scancode];
+						if(kbd_us_up[scancode] == '\b')
+							i-=2;
+						putChar(kbd_us_up[scancode]);
+					}
+					else
+					{
+						line[i++]=kbd_us[scancode];
+						if(kbd_us[scancode] == '\b')
+							i-=2;
+						putChar(kbd_us[scancode]);
+					}
+				}
 				break;
-			}
 		}
+		if(kbd_us[scancode] == '\n')
+		{
+			line[--i]=NULL;
+			i=0;
+			shInterpret(line);
+		}
+	}
 }

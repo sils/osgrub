@@ -27,7 +27,7 @@ loader:
     mov  esp, stack
     ;mov  [magic], eax                   ; Multiboot magic number
     ;mov  [mbd], ebx                     ; Multiboot info structure
- 
+	push ebx ; launch multiBoot information as parameter to kernel initialization function
     call init ; call the c kernel :)
 
 .hang:

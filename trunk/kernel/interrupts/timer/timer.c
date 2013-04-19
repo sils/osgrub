@@ -1,6 +1,16 @@
-#include "timer.h"
+#include "../../include.h"
 
-u32int tick = 0, freq, sec=0;
+u32int tick = 0, freq;
+
+static void refreshCmosVals()
+{
+	sec = readSecond();
+	min = readMinute();
+	hour= readHour();
+	day = readDay();
+	mon = readMonth();
+	year= readYear()+MILLENIUM;
+}
 
 static void timerInterrupt(registers_t regs)
 {
@@ -12,9 +22,32 @@ static void timerInterrupt(registers_t regs)
 			kprintf("WRONG IRQ NUMBER!\n");
 		}
 		else
+		{
 			sec++;
-		if(sec == 60)
-			kprintf("Minute's over!\n");
+			if(sec == 60)
+			{
+				sec = 0;
+				min++;
+			}
+			
+			if(min == 60)
+			{
+				min = 0;
+				hour++;
+			}
+			
+			if(hour == 24)
+			{
+				hour = 0;
+				day++;
+			}
+			if(day > 28)
+			{
+				refreshCmosVals();
+			}
+			//if(sec == 0)
+			//	kprintf("Today is: %u.%u.%u, %u:%u:%u.\n",day,mon,year,hour,min,sec);
+		}
 	}
 }
 
@@ -32,4 +65,6 @@ void initTimer(const u32int frequency)
 	
 	outb(0x40, l);
 	outb(0x40, h);
+	
+	refreshCmosVals();
 }

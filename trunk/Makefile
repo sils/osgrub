@@ -6,8 +6,10 @@ LDFLAGS = -melf_i386 -T linker.ld
 SRCS = $(shell find -name '*.[csS]')
 OBJFILES = $(addsuffix .o,$(basename $(SRCS)))
  
-all: kernel.img
- 
+default: kernel.bin
+
+all: clean kernel.bin
+
 .s.o:
 	nasm -f elf -o $@ $<
  
@@ -17,11 +19,7 @@ all: kernel.img
 kernel.bin: $(OBJFILES)
 	$(LD) $(LDFLAGS) -o $@ $^
  
-kernel.img: kernel.bin
-	dd if=/dev/zero of=buildhelpers/pad bs=1 count=750
-	cat buildhelpers/stage1 buildhelpers/stage2 buildhelpers/pad $< > $@
-
-iso: all
+iso: kernel.bin
 	cp kernel.bin buildhelpers/iso/boot/kernel
 	echo "Creating grub iso."
 	grub-mkrescue -o buildhelpers/bootable.iso buildhelpers/iso
