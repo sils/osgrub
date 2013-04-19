@@ -7,6 +7,9 @@
 
 #include <stdint.h>
 
+//general purpose macros
+#include "macros.h"
+
 //input output libraries
 #include "stdio/stdio.h"
 
@@ -16,7 +19,7 @@
 //everything for memory management
 #include "memory/memory.h"
 
-//interrupts
+//everything about interrupts
 #include "interrupts/interrupts.h"
 
 //exception handling

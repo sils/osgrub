@@ -1,35 +1,34 @@
-global loader            ; making entry point visible to linker
-global magic             ; we will use this in init
-global mbd               ; we will use this in init
-
-extern init              ; init is defined in init.cpp
- 
+section .multiboot 
 ; setting up the Multiboot header - see GRUB docs for details
 MODULEALIGN equ  1<<0                   ; align loaded modules on page boundaries
 MEMINFO     equ  1<<1                   ; provide memory map
-FLAGS       equ  MODULEALIGN | MEMINFO  ; this is the Multiboot 'flag' field
 MAGIC       equ  0x1BADB002             ; 'magic number' lets bootloader find the header
+FLAGS       equ  MODULEALIGN | MEMINFO  ; this is the Multiboot 'flag' field
 CHECKSUM    equ -(MAGIC + FLAGS)        ; checksum required
- 
-section .text
- 
+
 align 4
     dd MAGIC
     dd FLAGS
     dd CHECKSUM
- 
-; reserve initial kernel stack space
-STACKSIZE equ 0x4000 ; that's 16k.
+
+section .text
+
+global loader            ; making entry point visible to linker
+;global magic             ; we wont use this in init. Uncomment if you want to
+;global mbd               ; we wont use this in init. Same here.
+
+extern init ; defined in init.c - yes, thats the kernel
+STACKSIZE equ 0x2000 ; 8k stacksize - enought for starters
  
 loader:
-    mov  esp, stack + STACKSIZE         ; set up the stack
-    mov  [magic], eax                   ; Multiboot magic number
-    mov  [mbd], ebx                     ; Multiboot info structure
+    mov  esp, stack
+    ;mov  [magic], eax                   ; Multiboot magic number
+    ;mov  [mbd], ebx                     ; Multiboot info structure
  
-    call init ; call the kernel :)
- 
-    cli
+    call init ; call the c kernel :)
+
 .hang:
+	cli
     hlt
     jmp  .hang
     
@@ -38,6 +37,7 @@ loader:
 section .bss
  
 align 4
-stack: resb STACKSIZE ; reserve 16k stack on a doubleword boundary
+stackend: resb STACKSIZE ; reserve 8k stack on a doubleword boundary
+stack:
 magic: resd 1
 mbd:   resd 1

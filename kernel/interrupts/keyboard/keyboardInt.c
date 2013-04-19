@@ -83,6 +83,11 @@ void keyboardHandler(registers_t regs)
 	unsigned char scancode;
 	static unsigned char ctrlKeys;
 	
+	if(regs.int_no != IRQ1)
+	{
+		kprintf("Wrong interrupt?\n");
+		return;
+	}
 	scancode = inb(0x60); 
 	
 	if(scancode & 0x80)//a key was released

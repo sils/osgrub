@@ -4,6 +4,6 @@
 #include "../idt.h"
 #include "../../store/strings.h"
 
-void keyboardHandler(registers_t);
+void keyboardHandler(struct registers);
 
 #endif

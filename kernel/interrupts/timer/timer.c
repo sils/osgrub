@@ -6,9 +6,16 @@ static void timerInterrupt(registers_t regs)
 {
 	tick++;
 	if(tick % freq == 0)
+	{
+		if(regs.int_no != IRQ0)
 		{
-		sec++;
+			kprintf("WRONG IRQ NUMBER!\n");
 		}
+		else
+			sec++;
+		if(sec == 60)
+			kprintf("Minute's over!\n");
+	}
 }
 
 void initTimer(const u32int frequency)
