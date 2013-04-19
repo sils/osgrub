@@ -24,5 +24,6 @@
 
 //let's start multitasking!
 #include "tasks/taskroutines.h"
+#include "tasks/tasks.h"
 
 #endif

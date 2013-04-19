@@ -3,7 +3,7 @@
 
 #include "../include.h"
 
-typedef struct allocatetMem
+typedef struct allocatedMem
 {
 	char *startAdress;
 	unsigned int count;
