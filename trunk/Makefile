@@ -22,7 +22,7 @@ kernel.img: kernel.bin
 	cat buildhelpers/stage1 buildhelpers/stage2 buildhelpers/pad $< > $@
 
 iso: all
-	cp kernel.bin buildhelpers/iso/boot/grub/kernel
+	cp kernel.bin buildhelpers/iso/boot/kernel
 	echo "Creating grub iso."
 	grub-mkrescue -o buildhelpers/bootable.iso buildhelpers/iso
 	echo "Just dd the ISO to your stick!"
