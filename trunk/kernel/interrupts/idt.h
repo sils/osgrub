@@ -1,9 +1,7 @@
 #ifndef idt_h
 #define idt_h
 
-#include <stdint.h>
-#include "../memory/memory.h"
-#include "../stdio/stdio.h"
+#include "../include.h"
 
 #define IDT_ENTRIES 256
 
