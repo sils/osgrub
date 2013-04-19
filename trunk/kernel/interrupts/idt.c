@@ -109,7 +109,8 @@ void register_interrupt_handler(u16int n, isr_t handler)
 //(independent on what happens in there)
 void unhandledException(registers_t regs)
 {
-	kprintf("An unhandled exception was triggered! Number: %x\n", regs.int_no);
+	if(regs.int_no == 0)
+		kprintf("An unhandled exception was triggered! Number: %x\n", regs.int_no);
 }
 
 void irqHandler(registers_t regs)
@@ -124,14 +125,9 @@ void irqHandler(registers_t regs)
     // Send reset signal to master. (As well as slave, if necessary).
     outb(0x20, 0x20);
    
-    if (interrupt_handlers[regs.int_no] != 0)
-   		
-   		{
-        isr_t handler = interrupt_handlers[regs.int_no];
-        handler(regs);
-   		}
-    else
-   		{
-		kprintf("An unhandled irq was triggered! Number: %x\n",regs.int_no);
-		}
+    if(interrupt_handlers[regs.int_no]!=NULL)
+   	{
+       	isr_t handler = interrupt_handlers[regs.int_no];
+       	handler(regs);
+    }
 }
