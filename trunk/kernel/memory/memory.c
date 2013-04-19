@@ -1,4 +1,4 @@
-#include "memory.h"
+#include "../include.h"
 
 unsigned char *memcpy(unsigned char *dest, const unsigned char *src, u32int count)
 {

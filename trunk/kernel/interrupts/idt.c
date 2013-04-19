@@ -1,4 +1,5 @@
 #include "idt.h"
+#include "../include.h"
 
 void setIdtEntry(unsigned char id, unsigned long base, unsigned short sel, unsigned char flags)
 {

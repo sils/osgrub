@@ -5,7 +5,6 @@ LDFLAGS = -melf_i386 -T linker.ld
  
 SRCS = $(shell find -name '*.[csS]')
 OBJFILES = $(addsuffix .o,$(basename $(SRCS)))
-#OBJFILES = loader.o init.o kernel/stdio/text_output.o kernel/gdt/gdt.o kernel/exceptions/exceptions.o kernel/interrupts/idt.o kernel/memory/memory.o kernel/stdio/generalStdio.o kernel/interrupts/timer/timer.o
  
 all: kernel.img
  

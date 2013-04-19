@@ -1,8 +1,6 @@
 #ifndef idt_h
 #define idt_h
 
-#include "../include.h"
-
 #define IDT_ENTRIES 256
 
 /******************************************
