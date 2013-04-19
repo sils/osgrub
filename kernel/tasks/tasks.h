@@ -1,12 +1,12 @@
 #ifndef TASKS_H
 #define TASKS_H
 
-#include "../include.h"
+#include "../interrupts/idt.h"
 
-struct task
+struct taskstruct
 {
-	struct registers regs;
 	unsigned short taskId;
+	struct registers regs;
 	unsigned char status;
 	unsigned char timeFact;
 	unsigned char userId;
@@ -15,6 +15,6 @@ struct task
 	struct allocatedMem *mem;
 } __attribute__((packed));
 
-typedef struct task task_t;
+typedef struct taskstruct task;
 
 #endif
