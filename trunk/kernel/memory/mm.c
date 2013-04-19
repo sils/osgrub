@@ -26,6 +26,10 @@ void mMInit(const struct multiBoot *mbinfo)
 					mMFreePage((void*)addr);
 					i++;
 				}
+				else
+				{
+					kprintf("Kernel page: %x\n",addr);
+				}
 				addr += 0x1000;//which is one page (4096 bytes)
 			}
 		}
@@ -34,28 +38,22 @@ void mMInit(const struct multiBoot *mbinfo)
 	kprintf("There are %u free available memory pages.\n", i);
 }
 
-uintptr_t globIndex=0;
-
 void *mMAllocPage()
 {
-	static uintptr_t start;
-	start=globIndex-32;
-	unsigned char i;
-	while((bitmap[globIndex/32] == 0) && (start != globIndex))
+	int bm, i;
+	//kprintf("[ALLC] Searching for free pages.\n");
+	for(bm=0;bm<BITMAP_SIZE;bm++)
 	{
-		if(globIndex/32 >= BITMAP_SIZE)
-			globIndex=0;
-		globIndex++;
-	}
-	if(bitmap[globIndex/32] != 0)
-	{
-		//there is space available
-		for(i = 0;i<32;i++)
+		if(bitmap[bm] != 0)
 		{
-			if(bitmap[globIndex/32] & (1<<i))
+			//kprintf("[ALLC] Found space on page %u. Bitmap: %x\n",i,bitmap[bm]);
+			for(i = 0;i<32;i++)
 			{
-				bitmap[globIndex/32] &= ~(1<<i);
-				return (void*)(0x1000*(globIndex+i));
+				if((bitmap[bm] & (1<<i)) && (i != 0 || bm != 0)/*don't return null pointer*/)
+				{
+					bitmap[bm] &= ~(1<<i);
+					return (void*)(0x1000*(bm*32+i));
+				}
 			}
 		}
 	}
@@ -64,6 +62,7 @@ void *mMAllocPage()
 
 void mMFreePage(void *page)
 {
-	globIndex = (uintptr_t)page/0x1000;
-	bitmap[globIndex/32] = (1 << (globIndex % 32));
+	uintptr_t index = (uintptr_t)page/0x1000;
+	bitmap[index/32] |= (1 << (index % 32));
+	//kprintf("[FREE] Index: %u, Bitmap: %x\n", index/32,bitmap[index/32]);
 }
