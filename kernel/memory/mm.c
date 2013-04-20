@@ -1,6 +1,28 @@
 #include "../include.h"
 
+//TODO: write an OWN more performant one that can allocate pages of smaller size - who needs 4096 bytes everytime? (Only Java programmers.)
+
 static uint32_t bitmap[BITMAP_SIZE];
+
+void mMPrintBitmap()
+{
+	int i;
+	for(i=BITMAP_SIZE-1;i>=0;i--)
+	{
+		if(bitmap[i] != 0)
+		{
+			kprintf("[%u] %x ",i,bitmap[i]);
+			if(i%4 == 0)
+				kprintf("\n");
+		}
+	}
+	kprintf("\n");
+}
+
+void mMPrintBitmapI(unsigned int i)
+{
+	kprintf("[%u] %x\n",i,bitmap[i]);
+}
 
 void mMInit(const struct multiBoot *mbinfo)
 {
@@ -26,10 +48,10 @@ void mMInit(const struct multiBoot *mbinfo)
 					mMFreePage((void*)addr);
 					i++;
 				}
-				else
+				/*else
 				{
 					kprintf("Kernel page: %x\n",addr);
-				}
+				}*/
 				addr += 0x1000;//which is one page (4096 bytes)
 			}
 		}

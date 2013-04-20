@@ -26,6 +26,8 @@ uint32_t type;
 void mMInit(const struct multiBoot *);
 void* mMAllocPage();
 void mMFreePage(void *);
+void mMPrintBitmap();
+void mMPrintBitmapI(unsigned int);
 
 extern const void kernel_start;
 extern const void kernel_end;
