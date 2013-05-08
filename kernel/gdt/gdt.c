@@ -24,21 +24,23 @@ void gdt_install()
     gp.limit = (sizeof(struct gdt_entry) * GDT_ENTRIES) - 1;
     gp.base = (int)&gdt;
 
-    /* Our NULL descriptor */
+    //NULL descriptor (important!)
     gdt_set_gate(0, 0, 0, 0, 0);
 
-    /* The second entry is our Code Segment. The base address
-    *  is 0, the limit is 4GBytes, it uses 4KByte granularity,
-    *  uses 32-bit opcodes, and is a Code Segment descriptor.
-    *  Please check the table above in the tutorial in order
-    *  to see exactly what each value means */
-    gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
+    // see http://www.brokenthorn.com/Resources/OSDev12.html
+	
+	//kernel, code
+	gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
+	//kernel, data
+	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
+	
+	//user, code
+	gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
+	//user, data
+	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
+	
+	//yeah I know, it's a little general but at least they are somehow defined ;)
 
-    /* The third entry is our Data Segment. It's EXACTLY the
-    *  same as our code segment, but the descriptor type in
-    *  this entry's access byte says it's a Data Segment */
-    gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
-
-	// this function is defined in loader/gdtfunc.inc
+    // this function is defined in loader/gdtfunc.inc
     gdt_flush();
 }

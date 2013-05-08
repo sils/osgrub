@@ -1,5 +1,5 @@
 CC	= gcc
-CFLAGS	= -m32 -Wall -Wextra -nostdlib -fno-builtin -nostartfiles -nodefaultlibs -ffreestanding
+CFLAGS	= -m32 -Wall -Wextra -nostdlib -nostdinc -fno-builtin -nostartfiles -nodefaultlibs -ffreestanding -I ./include/
 LD	= ld
 LDFLAGS = -melf_i386 -T linker.ld
  

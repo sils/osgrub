@@ -1,14 +1,9 @@
 #ifndef generalStdio_h
 #define generalStdio_h
 
-typedef unsigned int   u32int;
-typedef          int   s32int;
-typedef unsigned short u16int;
-typedef          short s16int;
-typedef unsigned char  u8int;
-typedef          char  s8int;
+#include <stdint.h>
 
-void outb(u16int, u8int);
-u8int inb(u16int);
+void outb(uint16_t, uint8_t);
+uint8_t inb(uint16_t);
 
 #endif

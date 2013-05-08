@@ -8,8 +8,8 @@ typedef struct allocatedMem
 	unsigned int count;
 } allocatedMem_t;
 
-unsigned char *memcpy(unsigned char *, const unsigned char *, u32int);
-unsigned char *memset(unsigned char *, const unsigned char, u32int);
+unsigned char *memcpy(unsigned char *, const unsigned char *, uint32_t);
+unsigned char *memset(unsigned char *, const unsigned char, uint32_t);
 
 #include "mm.h"
 
