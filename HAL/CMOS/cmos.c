@@ -1,5 +1,4 @@
-#include "../include.h"
-
+#include "cmos.h"
 
 uint8_t readCmos(uint8_t offset)
 {

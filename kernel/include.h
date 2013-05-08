@@ -33,7 +33,7 @@
 #include "exceptions/exceptions.h"
 
 //access to some BIOS information
-#include "cmos/cmos.h"
+#include <CMOS/cmos.h>
 
 //our kernel-shell
 #include "kshell/kshell.h"

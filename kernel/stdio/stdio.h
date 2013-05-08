@@ -1,7 +1,7 @@
 #ifndef stdio_h
 #define stdio_h
 
-#include "generalStdio.h"
+#include <generalStdio.h>
 #include "print.h"
 #include <stdarg.h>
 #include "../store/strings.h"
