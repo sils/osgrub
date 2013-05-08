@@ -1,6 +1,6 @@
 #include "../../include.h"
 
-u32int tick = 0, freq;
+uint32_t tick = 0, freq;
 
 static void refreshCmosVals()
 {
@@ -51,17 +51,17 @@ static void timerInterrupt(registers_t regs)
 	}
 }
 
-void initTimer(const u32int frequency)
+void initTimer(const uint32_t frequency)
 {
 	freq = frequency;
 	
 	register_interrupt_handler(IRQ0, &timerInterrupt);
-	u32int divisor = 1193180 / frequency;
+	uint32_t divisor = 1193180 / frequency;
 	
 	outb(0x43, 0x36);
 	
-	u8int l = (u8int)(divisor & 0xFF);
-	u8int h = (u8int)( (divisor>>8) & 0xFF );
+	uint8_t l = (uint8_t)(divisor & 0xFF);
+	uint8_t h = (uint8_t)( (divisor>>8) & 0xFF );
 	
 	outb(0x40, l);
 	outb(0x40, h);

@@ -5,10 +5,17 @@
 | Includes all necessary files       |
 \-----------------------------------*/
 
+//standard integer datatypes
 #include <stdint.h>
 
-//general purpose macros
-#include "macros.h"
+//NULL
+#include <null.h>
+
+//for accessing unnamed parameters in printf and so on
+#include <stdarg.h>
+
+//hardware abstraction layer
+#include "../HAL/hal.h"
 
 //input output libraries
 #include "stdio/stdio.h"

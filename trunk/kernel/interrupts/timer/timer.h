@@ -4,7 +4,7 @@
 #include "../../stdio/stdio.h"
 #include "../idt.h"
 
-void initTimer(const u32int freq);
+void initTimer(const uint32_t freq);
 
 uint8_t sec,min,hour,day,mon;
 uint16_t year;

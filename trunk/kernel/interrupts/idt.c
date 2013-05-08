@@ -99,7 +99,7 @@ void generateIdt()
 
 isr_t interrupt_handlers[256];
 
-void register_interrupt_handler(u16int n, isr_t handler)
+void register_interrupt_handler(uint16_t n, isr_t handler)
 {
 	interrupt_handlers[n] = handler;
 }

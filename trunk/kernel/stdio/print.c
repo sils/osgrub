@@ -2,7 +2,7 @@
 
 void scrollUp()
 {
-	u16int i;
+	uint16_t i;
 	volatile unsigned char *videoram = (unsigned char *)0xB8000;
 	for(i=0;i<24*80*2;i++)
 		videoram[i]=videoram[i+160];
@@ -14,9 +14,9 @@ void scrollUp()
 	}
 }
 
-void put(const unsigned char val, const u8int color)
+void put(const unsigned char val, const uint8_t color)
 {
-	static u8int x=0, y=0;
+	static uint8_t x=0, y=0;
 	volatile unsigned char *videoram = (unsigned char *)0xB8000;
 	
 	if(val == '\n')
@@ -73,21 +73,21 @@ char charDigit(const unsigned char val)
 	return val-10+'A';
 }
 
-void intToStr(char *dest, const s32int val, const u8int base)
+void intToStr(char *dest, const int32_t val, const uint8_t base)
 {
 	if(val<0)
 		{
 		*(dest)='-';
-		uIntToStr(dest+1, (u32int)(-val), base);
+		uIntToStr(dest+1, (uint32_t)(-val), base);
 		}
-	else uIntToStr(dest, (u32int)val, base);
+	else uIntToStr(dest, (uint32_t)val, base);
 }
 
-void uIntToStr(char *dest, u32int val, const u8int base)
+void uIntToStr(char *dest, uint32_t val, const uint8_t base)
 {
 	//at binary representation we can have max 32 digits
 	char buf[33];
-	u8int i=32;
+	uint8_t i=32;
 	buf[i]=0;
 	do
 		{
@@ -100,7 +100,7 @@ void uIntToStr(char *dest, u32int val, const u8int base)
 
 void kprintf(const char *format, ...)
 {
-	u32int u_32_int;
+	uint32_t u_32_int;
 	char *strPtr, numStr[6];
 	va_list args;
 	va_start(args, format);
@@ -116,17 +116,17 @@ void kprintf(const char *format, ...)
 					print(strPtr);
 					break;
 				case 'd'://unsigned integer
-					u_32_int = va_arg(args, u32int);
+					u_32_int = va_arg(args, uint32_t);
 					intToStr(numStr, (int)u_32_int, 10);
 					print(numStr);
 					break;
 				case 'u'://unsigned integer
-					u_32_int = va_arg(args, u32int);
+					u_32_int = va_arg(args, uint32_t);
 					uIntToStr(numStr, u_32_int, 10);
 					print(numStr);
 					break;
 				case 'x'://hexadecimal unsigned integer
-					u_32_int = va_arg(args, u32int);
+					u_32_int = va_arg(args, uint32_t);
 					uIntToStr(numStr, u_32_int, 16);
 					print("0x");
 					print(numStr);

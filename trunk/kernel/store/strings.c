@@ -1,8 +1,8 @@
 #include "../include.h"
 
-u32int strlen(char *str)
+uint32_t strlen(char *str)
 {
-	u32int i=0;
+	uint32_t i=0;
 	while(str[i])
 		i++;
 	return i;

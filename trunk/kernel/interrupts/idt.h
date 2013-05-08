@@ -1,6 +1,8 @@
 #ifndef idt_h
 #define idt_h
 
+#include "../../include/stdint.h"
+
 #define IDT_ENTRIES 256
 
 /******************************************
@@ -10,16 +12,16 @@
  ******************************************/
 struct idt_entry
 {
-    unsigned short base_lo;
-    unsigned short sel;
-    unsigned char always0;
-    unsigned char flags;
-    unsigned short base_hi;
+    uint16_t base_lo;
+    uint16_t sel;
+    uint8_t always0;
+    uint8_t flags;
+    uint16_t base_hi;
 } __attribute__((packed));
 
 struct idt_ptr
 {
-    unsigned short limit;
+    uint16_t limit;
     unsigned int base;
 } __attribute__((packed));
 
@@ -36,8 +38,8 @@ typedef void (*isr_t)(registers_t);
 struct idt_entry idt[IDT_ENTRIES];
 struct idt_ptr idtp;
 
-void setIdtEntry(unsigned char, unsigned long, unsigned short, unsigned char);
-void register_interrupt_handler(unsigned short int, isr_t);
+void setIdtEntry(uint8_t, unsigned long, uint16_t, uint8_t);
+void register_interrupt_handler(uint16_t, isr_t);
 void generateIdt();
 void remapIrq();
 

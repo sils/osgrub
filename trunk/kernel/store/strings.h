@@ -5,7 +5,7 @@
 
 void strcat(char *, char *);
 void strcpy(char *, char *);
-u32int strlen(char *);
+uint32_t strlen(char *);
 char strcmp(char *, char *);
 int strtoi(char *, unsigned char);
 unsigned int strtoui(char *, unsigned char);
