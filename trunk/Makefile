@@ -1,5 +1,9 @@
 CC	= gcc
-CFLAGS	= -m32 -Wall -Wextra -nostdlib -nostdinc -fno-builtin -nostartfiles -nodefaultlibs -ffreestanding -I ./include/
+INCDIRS = -I ./include/ -I ./HAL/
+EXCLUDE = -nostdlib -nostdinc -fno-builtin -nostartfiles -nodefaultlibs -ffreestanding
+WARNLEV = -Wall -Wextra
+ARCH	= -m32
+CFLAGS	= $(ARCH) $(WARNLEV) $(EXCLUDE) $(INCDIRS)
 LD	= ld
 LDFLAGS = -melf_i386 -T linker.ld
  
