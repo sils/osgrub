@@ -13,6 +13,7 @@ void setIdtEntry(unsigned char id, unsigned long base, unsigned short sel, unsig
 
 void remapIrq()
 {
+	//send commands to PIC
     outb(0x20, 0x11); //initialize master PIC
     outb(0x21, 0x20);
     outb(0x21, 0x04);
@@ -104,12 +105,10 @@ void register_interrupt_handler(uint16_t n, isr_t handler)
 	interrupt_handlers[n] = handler;
 }
 
-//FIXME KNOWN BUG: if a real division by zero occurs
-//the interrupt will be triggered repeatedly!
-//(independent on what happens in there)
 void unhandledException(registers_t regs)
 {
-	kprintf("An unhandled exception was triggered! Number: %x\n", regs.int_no);
+	kprintf("An unhandled exception was triggered! Number: %x\nHalting kernel.", regs.int_no);
+	while(1);
 }
 
 void irqHandler(registers_t regs)
