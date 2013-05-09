@@ -45,8 +45,6 @@ static void timerInterrupt(registers_t * regs)
 			{
 				refreshCmosVals();
 			}
-			//if(sec == 0)
-			//	kprintf("Today is: %u.%u.%u, %u:%u:%u.\n",day,mon,year,hour,min,sec);
 		}
 	}
 }

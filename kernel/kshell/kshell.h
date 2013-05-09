@@ -9,4 +9,8 @@ void shFree(char*);
 void shMemInfo();
 void shPrintBitmap();
 
+#include <stdio.h>
+#include <null.h>
+#include "../interrupts/timer/timer.h"
+
 #endif

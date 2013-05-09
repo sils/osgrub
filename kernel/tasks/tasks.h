@@ -1,7 +1,7 @@
 #ifndef TASKS_H
 #define TASKS_H
 
-#include "../interrupts/idt.h"
+#include <idt/idt.h>
 
 struct taskstruct
 {

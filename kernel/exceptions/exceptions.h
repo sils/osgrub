@@ -1,7 +1,7 @@
 #ifndef exceptions_h
 #define exceptions_h
 
-#include "../stdio/print.h"
+#include <print.h>
 
 
 void printException(char *);
