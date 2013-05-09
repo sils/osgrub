@@ -8,7 +8,7 @@
  * and includes all interrupt functions.*
  ****************************************/
 
-#include "idt.h"
+#include <idt/idt.h>
 #include "timer/timer.h"
 #include "keyboard/keyboardInt.h"
 

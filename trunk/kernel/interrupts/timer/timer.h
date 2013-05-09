@@ -1,8 +1,8 @@
 #ifndef timer_h
 #define timer_h
 
-#include "../../stdio/stdio.h"
-#include "../idt.h"
+#include <stdio.h>
+#include <idt/idt.h>
 
 void initTimer(const uint32_t freq);
 

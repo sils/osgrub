@@ -1,4 +1,4 @@
-#include "../../include.h"
+#include "keyboardInt.h"
 
 void initKeyboard()
 {
@@ -7,7 +7,7 @@ void initKeyboard()
     kprintf("Successfully activated keyboard.");
 }
 
-void keyboardHandler(registers_t regs)
+void keyboardHandler(registers_t * regs)
 {
 	unsigned char kbd_us[128] =
 	{
@@ -92,7 +92,7 @@ void keyboardHandler(registers_t regs)
 	static char line[80];
 	static uint8_t i=0;
 	
-	if(regs.int_no != IRQ1)
+	if(regs->int_no != IRQ1)
 	{
 		kprintf("Wrong interrupt?\n");
 		return;

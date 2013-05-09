@@ -12,12 +12,12 @@ static void refreshCmosVals()
 	year= readYear()+MILLENIUM;
 }
 
-static void timerInterrupt(registers_t regs)
+static void timerInterrupt(registers_t * regs)
 {
 	tick++;
 	if(tick % freq == 0)
 	{
-		if(regs.int_no != IRQ0)
+		if(regs->int_no != IRQ0)
 		{
 			kprintf("WRONG IRQ NUMBER!\n");
 		}

@@ -1,10 +1,13 @@
 #ifndef keyboardInt_h
 #define keyboardInt_h
 
-#include "../idt.h"
-#include "../../store/strings.h"
+#include <idt/idt.h>
+#include <strings.h>
+#include <stdint.h>
+#include <null.h>
+#include "../../kshell/kshell.h"
 
-void keyboardHandler(struct registers);
+void keyboardHandler(registers_t *);
 void initKeyboard();
 
 #endif
