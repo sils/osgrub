@@ -1,6 +1,8 @@
 #ifndef CMOS_H
 #define CMOS_H
 
+/* Contains functions to read information from the CMOS. */
+
 #include <stdint.h>
 #include <generalStdio.h>
 

@@ -14,7 +14,7 @@ void init(struct multiBoot *mbstruct)
 	kprintf("Install interrupt descriptor table...\n");
 	generateIdt();
 	initKeyboard();
-	kprintf("Everything's set up. Type help to get more information.\n");
+	kprintf("Everything's set up. Type 'help' to get more information.\n");
 	kprintf("[user]$ ");
 
 	for(;;);
