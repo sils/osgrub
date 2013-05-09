@@ -1,4 +1,4 @@
-#include "../../include.h"
+#include "timer.h"
 
 uint32_t tick = 0, freq;
 
@@ -47,6 +47,10 @@ static void timerInterrupt(registers_t * regs)
 			}
 		}
 	}
+	
+	//dispatch!
+	if(taskCount >0)
+		*regs = schedule(*regs);
 }
 
 void initTimer(const uint32_t frequency)

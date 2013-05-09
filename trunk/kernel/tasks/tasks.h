@@ -1,20 +1,16 @@
 #ifndef TASKS_H
 #define TASKS_H
 
-#include <idt/idt.h>
+#include <regs.h>
+#include <null.h>
+#include <stdint.h>
 
-struct taskstruct
-{
-	unsigned short taskId;
-	struct registers regs;
-	unsigned char status;
-	unsigned char timeFact;
-	unsigned char userId;
-	struct task * prevQueue;
-	struct task * nextQueue;
-	struct allocatedMem *mem;
-} __attribute__((packed));
+#include "../memory/mm.h"
+#include "../interrupts/scheduler.h"
 
-typedef struct taskstruct task;
+void* initTask(void *);
+void initMultitasking();
+
+uint8_t taskCount;
 
 #endif

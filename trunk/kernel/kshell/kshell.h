@@ -12,5 +12,8 @@ void shPrintBitmap();
 #include <stdio.h>
 #include <null.h>
 #include "../interrupts/timer/timer.h"
+#include <memory.h>
+#include "../tasks/taskroutines.h"
+#include "../tasks/tasks.h"
 
 #endif
