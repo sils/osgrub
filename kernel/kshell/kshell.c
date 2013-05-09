@@ -10,6 +10,11 @@ void shInterpret(char * string)
 		shAlloc();
 	if(strcmp(string,"memInfo"))
 		shMemInfo();
+	if(strcmp(string,"multitask"))
+	{
+		initTask(task_a);
+		initTask(task_b);
+	}
 	if(string[4] == ' ')
 	{
 		string[4]=NULL;
@@ -55,6 +60,7 @@ void shHelp()
 	kprintf("   memInfo <decval>\n");
 	kprintf("   allocPage\n");
 	kprintf("   freePage <hexval>\n");
+	kprintf("   multitask\n");
 }
 
 void shFree(char *param)

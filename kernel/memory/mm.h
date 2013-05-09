@@ -1,6 +1,10 @@
 #ifndef MM_H
 #define MM_H
 
+#include <stdint.h>
+#include <null.h>
+#include <stdio.h>
+
 struct multiBoot
 {
 uint32_t flags;

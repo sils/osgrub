@@ -11,9 +11,10 @@ void init(struct multiBoot *mbstruct)
 	//register keyboard interrupt handler
 	initKeyboard();
 	//install interrupt descriptor table
+	initMultitasking();
 	generateIdt();
-	
-	kprintf("IDT and GDT is set up. Keyboard should work. Date and time should be available. Memory manager is uninitialized - DONT use it!!!");
+	mMInit(mbstruct);
+	kprintf("IDT and GDT is set up. Keyboard should work. Date and time should be available. Memory manager is initialized.\n");
 	kprintf("[user]$ ");
 
 	for(;;);

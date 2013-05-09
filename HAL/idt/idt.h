@@ -2,6 +2,7 @@
 #define IDT_H
 
 #include <stdint.h>
+#include <regs.h>
 
 #define IDT_ENTRIES 256
 
@@ -24,14 +25,6 @@ struct idt_ptr
 	uint16_t limit;
 	unsigned int base;
 } __attribute__((packed));
-
-typedef struct registers
-{
-	uint32_t ds;                  // Data segment selector
-	uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
-	uint32_t int_no, err_code;    // Interrupt number and error code (if applicable)
-	uint32_t eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
-} registers_t;
 
 typedef void(*intHandler)(registers_t *);
 
