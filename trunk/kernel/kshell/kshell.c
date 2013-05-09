@@ -1,4 +1,4 @@
-#include "../include.h"
+#include "kshell.h"
 
 void shInterpret(char * string)
 {

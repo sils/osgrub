@@ -1,89 +1,42 @@
 global idt_load
 
-extern idtp
 ; TODO use parameters and no global variables!
+extern idtp
 idt_load:
 	lidt [idtp]
 	ret
+
+
+; Interrupt handling:
 
 %macro ISR_NOERR 1
 global isr%1
 isr%1:
 	cli
-	push byte 0 ; pseudo error code
+	; no error code
+	push byte 0
+	; push interrupt number
 	push byte %1
-	jmp isr_common
+	jmp commonInt
 %endmacro
 
 %macro ISR_ERR 1
 global isr%1
 isr%1:
 	cli
+	; error code is pushed automatically, push int number
 	push byte %1
-	jmp isr_common
+	jmp commonInt
 %endmacro
 
-extern unhandledException
-isr_common:
-   pusha                    ; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
-
-   mov ax, ds               ; Lower 16-bits of eax = ds.
-   push eax                 ; save the data segment descriptor
-
-   mov ax, 0x10  ; load the kernel data segment descriptor
-   mov ds, ax
-   mov es, ax
-   mov fs, ax
-   mov gs, ax
-
-   call unhandledException
-
-   pop eax        ; reload the original data segment descriptor
-   mov ds, ax
-   mov es, ax
-   mov fs, ax
-   mov gs, ax
-
-   popa                     ; Pops edi,esi,ebp...
-   add esp, 8     ; Cleans up the pushed error code and pushed ISR number
-   sti
-   iret           ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
-
-; and the whole fun for IRQs
 %macro IRQ 2
 global irq%1
 irq%1:
 	cli
 	push byte 0
 	push byte %2
-	jmp irq_common
+	jmp commonInt
 %endmacro
-
-extern irqHandler
-irq_common: ; same as idt except the function call
-	pusha                    ; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
-
-   mov ax, ds               ; Lower 16-bits of eax = ds.
-   push eax                 ; save the data segment descriptor
-
-   mov ax, 0x10  ; load the kernel data segment descriptor
-   mov ds, ax
-   mov es, ax
-   mov fs, ax
-   mov gs, ax
-
-   call irqHandler
-
-   pop eax        ; reload the original data segment descriptor
-   mov ds, ax
-   mov es, ax
-   mov fs, ax
-   mov gs, ax
-
-   popa                     ; Pops edi,esi,ebp...
-   add esp, 8     ; Cleans up the pushed error code and pushed ISR number
-   sti
-   iret           ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
 
 ISR_NOERR 0
 ISR_NOERR 1
@@ -133,3 +86,33 @@ IRQ  12,    44
 IRQ  13,    45
 IRQ  14,    46
 IRQ  15,    47
+
+;now the nasty things:
+extern generalIntHandler
+commonInt:
+    pusha                    ; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
+
+    mov ax, ds               ; Lower 16-bits of eax = ds.
+    push eax                 ; Save the data segment descriptor
+
+    mov ax, 0x10             ; Load the kernel data segment descriptor
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+
+    push esp    	     	 ; Push a pointer to the current top of stack - this becomes the registers_t* parameter.
+    call generalIntHandler   ; Call into our C code.
+    add esp, 4		     	 ; Remove the registers_t* parameter.
+
+    pop ebx                  ; Reload the original data segment descriptor
+    mov ds, bx
+    mov es, bx
+    mov fs, bx
+    mov gs, bx
+    mov ss, bx
+
+    popa                     ; Pops edi,esi,ebp...
+    add esp, 8               ; Cleans up the pushed error code and pushed ISR number
+    iret                     ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP

@@ -15,13 +15,13 @@
 #include <stdarg.h>
 
 //input output libraries
-#include "stdio/stdio.h"
+#include <stdio.h>
 
 //global descriptor table
 #include <gdt/gdt.h>
 
 //everything for memory management
-#include "memory/memory.h"
+#include <memory.h>
 
 //everything about interrupts
 #include "interrupts/interrupts.h"

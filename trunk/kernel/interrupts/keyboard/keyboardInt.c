@@ -5,6 +5,7 @@ void initKeyboard()
 	while ((inb(0x64) & 0x2)); //wait until keyboard is ready
     outb(0x60,0xF4);
     kprintf("Successfully activated keyboard.");
+	register_interrupt_handler(IRQ1, &keyboardHandler);
 }
 
 void keyboardHandler(registers_t * regs)

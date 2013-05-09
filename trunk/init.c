@@ -1,20 +1,19 @@
 #include "kernel/include.h"
 
+char welcomeString[] = "_             _  _____   _        __    ___    _    _   _____   _ \n\\\\           // |  ___| | |      / _|  /   \\  | \\  / | |  ___| | |\n \\\\    _    //  | |__   | |     / /   /  _  \\ |  \\/  | | |__   | |\n  \\\\  /_\\  //   |  __|  | |     | |   | |_| | | |\\/| | |  __|  |_|\n   \\\\// \\\\//    | |___  | |___  \\ \\_  \\     / | |  | | | |___   _ \n    \\/   \\/     |_____| |_____|  \\__|  \\___/  |_|  |_| |_____| |_|\n";
+
 void init(struct multiBoot *mbstruct)
 {
-	kprintf("Kernel booted successfully.\n");
-	kprintf("Installing global descriptor table...\n");
+	kprintf(welcomeString);
 	gdt_install();
-	kprintf("Initiate software clock...\n");
+	//initialize timer with 100Hz
 	initTimer(100);
-	kprintf("Initiate memory manager...\n");
-	mMInit(mbstruct);
-	kprintf("Install keyboard interrupt handler...\n");
-	register_interrupt_handler(IRQ1, &keyboardHandler);
-	kprintf("Install interrupt descriptor table...\n");
-	generateIdt();
+	//register keyboard interrupt handler
 	initKeyboard();
-	kprintf("Everything's set up. Type 'help' to get more information.\n");
+	//install interrupt descriptor table
+	generateIdt();
+	
+	kprintf("IDT and GDT is set up. Keyboard should work. Date and time should be available. Memory manager is uninitialized - DONT use it!!!");
 	kprintf("[user]$ ");
 
 	for(;;);

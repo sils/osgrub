@@ -1,7 +1,7 @@
 #ifndef strings_h
 #define strings_h
 
-#include "../stdio/stdio.h"
+#include <stdint.h>
 
 void strcat(char *, char *);
 void strcpy(char *, char *);

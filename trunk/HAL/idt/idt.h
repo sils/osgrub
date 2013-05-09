@@ -1,7 +1,7 @@
-#ifndef idt_h
-#define idt_h
+#ifndef IDT_H
+#define IDT_H
 
-#include "../../include/stdint.h"
+#include <stdint.h>
 
 #define IDT_ENTRIES 256
 
@@ -12,39 +12,41 @@
  ******************************************/
 struct idt_entry
 {
-    uint16_t base_lo;
-    uint16_t sel;
-    uint8_t always0;
-    uint8_t flags;
-    uint16_t base_hi;
+	uint16_t base_lo;
+	uint16_t sel;
+	uint8_t always0;
+	uint8_t flags;
+	uint16_t base_hi;
 } __attribute__((packed));
 
 struct idt_ptr
 {
-    uint16_t limit;
-    unsigned int base;
+	uint16_t limit;
+	unsigned int base;
 } __attribute__((packed));
 
 typedef struct registers
 {
-   unsigned int ds;                  // Data segment selector
-   unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
-   unsigned int int_no, err_code;    // Interrupt number and error code (if applicable)
-   unsigned int eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
+	uint32_t ds;                  // Data segment selector
+	uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
+	uint32_t int_no, err_code;    // Interrupt number and error code (if applicable)
+	uint32_t eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
 } registers_t;
 
-typedef void (*isr_t)(registers_t);
+typedef void(*intHandler)(registers_t *);
 
 struct idt_entry idt[IDT_ENTRIES];
 struct idt_ptr idtp;
+intHandler interrupt_handlers[256];
 
+void generalIntHandler(registers_t *);//TODO
 void setIdtEntry(uint8_t, unsigned long, uint16_t, uint8_t);
-void register_interrupt_handler(uint16_t, isr_t);
+void register_interrupt_handler(uint16_t, intHandler);
 void generateIdt();
 void remapIrq();
 
+//ASM routines
 extern void idt_load();
-
 // interrupt handler routines
 extern void isr0 ();
 extern void isr1 ();
@@ -113,7 +115,7 @@ extern void irq15();
 #define IRQ14 46
 #define IRQ15 47
 
-void unhandledException(registers_t);
-void irqHandler(registers_t);
+#include <stdio.h>
+#include <memory.h>
 
 #endif
