@@ -1,0 +1,3 @@
+1. Move GDT and IDT to HAL. Timer and keyboard as well.
+2. Move the stdio to include and maybe split it up a little. Stdio is the main standard input output header.
+3. Remove HAL.h since it is not needed
