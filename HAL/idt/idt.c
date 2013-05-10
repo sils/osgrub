@@ -110,9 +110,9 @@ void generalIntHandler(registers_t *regs)
 	}
 	else
 	{
-		kprintf("Unhandled interrupt: %d\n", regs->int_no);
-		kprintf("Error code: %d\nHalting system!", regs->err_code);
-		while(1);
+		kprintf("Unhandled interrupt (%d)\n", regs->int_no);
+		//regDump(*regs);
+		kernelException();
 	}
 	
 	if (regs->int_no >= 40)

@@ -1,3 +1,3 @@
 #!/bin/bash
 make
-qemu-system-i386 -kernel kernel.bin
+qemu-system-i386 -kernel kernel.bin -gdb tcp::1234

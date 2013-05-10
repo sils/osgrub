@@ -108,6 +108,8 @@ extern void irq15();
 #define IRQ14 46
 #define IRQ15 47
 
+extern void kernelException();
+
 #include <stdio.h>
 #include <memory.h>
 

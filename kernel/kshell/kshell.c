@@ -12,8 +12,10 @@ void shInterpret(char * string)
 		shMemInfo();
 	if(strcmp(string,"multitask"))
 	{
-		initTask(task_a);
-		initTask(task_b);
+		initTask((uint32_t)task_b);
+		initTask((uint32_t)task_a);
+		//initTask((uint32_t)task_b);
+		//initTask((uint32_t)task_b);
 	}
 	if(string[4] == ' ')
 	{

@@ -35,9 +35,9 @@ void gdt_install()
 	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
 	
 	//user, code
-	gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
+	//gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
 	//user, data
-	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
+	//gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
 	
 	//yeah I know, it's a little general but at least they are somehow defined ;)
 

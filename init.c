@@ -7,15 +7,17 @@ void init(struct multiBoot *mbstruct)
 	kprintf(welcomeString);
 	gdt_install();
 	//initialize timer with 100Hz
-	initTimer(100);
+	initTimer(50);
 	//register keyboard interrupt handler
 	initKeyboard();
 	//install interrupt descriptor table
+	mMInit(mbstruct);
 	initMultitasking();
 	generateIdt();
-	mMInit(mbstruct);
-	kprintf("IDT and GDT is set up. Keyboard should work. Date and time should be available. Memory manager is initialized.\n");
+	//kprintf("IDT and GDT is set up. Keyboard should work. Date and time should be available. Memory manager is initialized.\n");
 	kprintf("[user]$ ");
 
 	for(;;);
+	kprintf("A placehoolder");
+	kprintf("A placehoolder");
 }
