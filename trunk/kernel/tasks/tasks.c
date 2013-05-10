@@ -5,21 +5,25 @@
 void initMultitasking()
 {
 	taskStates = mMAllocPage();
+	if(taskStates == NULL)
+	{
+		kprintf("[FATAL] Failed to initialize multitasking!\n");
+		//TODO trigger some exception
+	}
 	taskStates[0]=(task *)NULL;
 	taskCount = 0;
 	kprintf("Multitasking was successfully initialized.\n");
 }
 
-//TODO DEBUG
-void* initTask(void * entry)
+void* initTask(uint32_t entry)
 {
 	static unsigned short ids = 0;
 	task *dest=0;
 	
-	kprintf("Entry point: %x\n",(uint32_t) entry);
+	//kprintf("Entry point: %x\n",entry);
 	dest = mMAllocPage();
 	
-	taskStates[ids]= (void*)dest+0x1000-sizeof(task);
+	taskStates[ids]= dest+0x1000-sizeof(task);
 	registers_t new_state =
 	{
 		.eax = 0,
@@ -29,17 +33,18 @@ void* initTask(void * entry)
 		.esi = 0,
 		.edi = 0,
 		.ebp = 0,
-		//.esp = unused - we stay in ring 0 for now
-		.eip = (uint32_t) entry,
+		.esp = (uint32_t)dest+0x1000-sizeof(task),
+		.eip = entry,
 		
 		.cs  = 0x08,
-		//.ss unused for now
+		.ss = 0,
+		.ds = 0x10,
 		
 		//interrupt flag on
-		.eflags = 0x202,
+		.eflags = 0x246,
 	};
 	task newtask = {
-		.taskId = ids++,
+		.taskId = ids,
 		.regs = new_state,
 		.status = 0,
 		.timeFact = 1,
@@ -48,13 +53,10 @@ void* initTask(void * entry)
 		.nextQueue = NULL,
 		.mem = NULL, //save dest here as one entry too???
 	};
-	kprintf("Newtask: %x",newtask.regs.eip);
+	(*taskStates[ids]) = newtask;
 	
-	
-	(*taskStates[ids]).taskId = ids++;
-	(*taskStates[ids]).regs = new_state;
-	kprintf("Addr: %x\nEntry point IS: %x\n",(*taskStates[ids]).taskId);
-	
+	//kprintf("eip of new task: %x\n",(*taskStates[ids]).regs.eip);
+	ids++;
 	taskCount++;
 	return dest;
 }

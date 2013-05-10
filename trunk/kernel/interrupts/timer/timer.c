@@ -17,6 +17,7 @@ static void timerInterrupt(registers_t * regs)
 	tick++;
 	if(tick % freq == 0)
 	{
+		//kprintf("Sec");
 		if(regs->int_no != IRQ0)
 		{
 			kprintf("WRONG IRQ NUMBER!\n");
@@ -47,10 +48,34 @@ static void timerInterrupt(registers_t * regs)
 			}
 		}
 	}
-	
+	/*
+	 * typedef struct registers
+	 {
+	 uint32_t ds;                  // Data segment selector
+	 uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
+	 uint32_t int_no, err_code;    // Interrupt number and error code (if applicable)
+	 uint32_t eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
+	 } registers_t;
+	 */
 	//dispatch!
 	if(taskCount >0)
-		*regs = schedule(*regs);
+	{
+		registers_t tmp=schedule(*regs);
+		(*regs).ds = tmp.ds;
+		(*regs).edi = tmp.edi;
+		(*regs).esi = tmp.esi;
+		(*regs).ebp = tmp.ebp;
+		(*regs).esp = tmp.esp;
+		(*regs).ebx = tmp.ebx;
+		(*regs).ecx = tmp.ecx;
+		(*regs).edx = tmp.edx;
+		(*regs).eax = tmp.eax;
+		(*regs).eip = tmp.eip;
+		(*regs).cs = tmp.cs;
+		(*regs).eflags = tmp.eflags;
+		(*regs).useresp = tmp.useresp;
+		(*regs).ss = tmp.ss;
+	}
 }
 
 void initTimer(const uint32_t frequency)

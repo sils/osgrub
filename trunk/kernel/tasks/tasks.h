@@ -8,7 +8,7 @@
 #include "../memory/mm.h"
 #include "../interrupts/scheduler.h"
 
-void* initTask(void *);
+void* initTask(uint32_t);
 void initMultitasking();
 
 uint8_t taskCount;
