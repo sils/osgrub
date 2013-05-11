@@ -12,7 +12,6 @@ void initMultitasking()
 	}
 	taskStates[0]=(task *)NULL;
 	taskCount = 0;
-	kprintf("Multitasking was successfully initialized.\n");
 }
 
 void* initTask(uint32_t entry)
@@ -33,7 +32,7 @@ void* initTask(uint32_t entry)
 		.esi = 0,
 		.edi = 0,
 		.ebp = 0,
-		.esp = (uint32_t)dest+0x1000-sizeof(task),
+		.esp = (uint32_t)dest+0x1000-sizeof(task),//stack grows towards dest
 		.eip = entry,
 		
 		.cs  = 0x08,
