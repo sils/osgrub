@@ -57,7 +57,6 @@ void mMInit(const struct multiBoot *mbinfo)
 		}
 		mMap++;
 	}
-	kprintf("There are %u free available memory pages.\n", i);
 }
 
 void *mMAllocPage()

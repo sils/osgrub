@@ -28,7 +28,7 @@ void shInterpret(char * string)
 		string[7]=NULL;
 		if(strcmp(string,"memInfo"))
 		{
-			mMPrintBitmapI(strtoui(string+8, 10));
+			mMPrintBitmapI(strtoui(string+8, 16));
 		}
 	}
 	if(string[8]==' ')
@@ -59,10 +59,12 @@ void shHelp()
 	kprintf("   echo <something>\n");
 	kprintf("   date\n");
 	kprintf("   memInfo\n");
-	kprintf("   memInfo <decval>\n");
+	kprintf("   memInfo <hexval>\n");
 	kprintf("   allocPage\n");
 	kprintf("   freePage <hexval>\n");
 	kprintf("   multitask\n");
+	kprintf("\n");
+	kprintf("Please enter hexadecimal values without proceding 0x.\n");
 }
 
 void shFree(char *param)
